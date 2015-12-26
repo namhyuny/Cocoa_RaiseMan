@@ -137,18 +137,47 @@
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError {
+    
+    //편집 종료
+    [[tableView window]endEditingFor:nil];
+    
+    //emloyeess 배열로 부터 NSData 객체를 생성
+    return [NSKeyedArchiver archivedDataWithRootObject:employees];
+    
+    /*
     // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
     // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
     [NSException raise:@"UnimplementedMethod" format:@"%@ is unimplemented", NSStringFromSelector(_cmd)];
     return nil;
+    */
 }
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError {
+    
+    NSLog(@"About to read data of type %@", typeName);
+    NSMutableArray *newArray = nil;
+    @try {
+        newArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    @catch (NSException *exception) {
+        if (outError) {
+            NSDictionary *d = [NSDictionary dictionaryWithObject:@"The data is corrupted" forKey:NSLocalizedFailureReasonErrorKey];
+            *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:d];
+        }
+        return NO;
+    }
+    @finally {
+        [self setEmployees:newArray];
+        return YES;
+    }
+    
+    /*
     // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
     // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
     [NSException raise:@"UnimplementedMethod" format:@"%@ is unimplemented", NSStringFromSelector(_cmd)];
     return YES;
+    */
 }
 
 
