@@ -132,7 +132,14 @@
 
 -(IBAction)removeEmployee:(id)sender {
     NSArray *selectedPeople = [employeeController selectedObjects];
-    NSAlert *alert = [NSAlert alertWithMessageText:@"Delete?" defaultButton:@"Delete" alternateButton:@"Cancel" otherButton:nil informativeTextWithFormat:@"Do you really want to delete %lu people?", (unsigned long)[selectedPeople count]];
+    NSAlert *alert = [NSAlert
+                      alertWithMessageText:NSLocalizedString(@"DELETE", @"Delete")
+                             defaultButton:NSLocalizedString(@"DELETE", @"Delete")
+                           alternateButton:NSLocalizedString(@"CANCEL", @"Cancel")
+                               otherButton:nil
+                 informativeTextWithFormat:NSLocalizedString(@"SURE_DELETE",
+                                                             @"Do you really want to delete %lu people?"), (unsigned long)[selectedPeople count]];
+    
     NSLog(@"Starting alert sheet");
     [alert beginSheetModalForWindow:[tableView window] modalDelegate:self didEndSelector:@selector(alertEnded:code:context:) contextInfo:NULL];
 }
