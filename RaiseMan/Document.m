@@ -17,9 +17,22 @@
 @implementation Document
 
 -(id)init {
-    self = [super init];
+    if (![super init]) {
+        return nil;
+    }
+    
     employees = [[NSMutableArray alloc]init];
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(handleColorChange:) name:BNRColorChangedNotification object:nil];
+    NSLog(@"Registerd with notification center");
     return self;
+}
+
+-(void)handleColorChange:(NSNotification *)note {
+    NSLog(@"Received notification %@", note);
+    NSColor *color = [[note userInfo] objectForKey:@"color"];
+    [tableView setBackgroundColor:color];
 }
 
 -(void)insertObject:(Person *)p inEmployeesAtIndex:(int)index {

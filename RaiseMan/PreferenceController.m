@@ -9,6 +9,7 @@
 #import "PreferenceController.h"
 NSString * const BNRTableBgColorKey = @"TableBackgroundColor";
 NSString * const BNREmptyDocKey = @"EmptyDocumentFlag";
+NSString * const BNRColorChangedNotification = @"BNRColorChanged";
 
 @implementation PreferenceController
 
@@ -39,9 +40,20 @@ NSString * const BNREmptyDocKey = @"EmptyDocumentFlag";
 -(IBAction)changeBackgoundColor:(id)sender {
     NSColor *color = [colorWell color];
     NSData *colorAsData = [NSKeyedArchiver archivedDataWithRootObject:color];
+    
+    [[NSUserDefaults standardUserDefaults]setObject:colorAsData forKey:BNRTableBgColorKey];
+    
+    /*
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:colorAsData forKey:BNRTableBgColorKey];
     NSLog(@"Color changed: %@", color);
+    */
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    NSLog(@"Sending notification");
+    NSDictionary *d = [NSDictionary dictionaryWithObject:color forKey:@"color"];
+    [nc postNotificationName:BNRColorChangedNotification object:self userInfo:d];
+    
 }
 
 -(IBAction)changeNewEmptyDoc:(id)sender {
