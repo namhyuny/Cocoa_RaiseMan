@@ -97,6 +97,14 @@
     [undo setActionName:@"Edit"];
 }
 
+-(void)alertEnded:(NSAlert *)alert code:(int)choice context:(void *)v {
+    NSLog(@"Alert sheet ended");
+    
+    if (choice == NSAlertDefaultReturn) {
+        [employeeController remove:nil];
+    }
+}
+
 -(IBAction)createEmployee:(id)sender {
     NSWindow *w = [tableView window];
     
@@ -121,6 +129,14 @@
     
     [tableView editColumn:0 row:row withEvent:nil select:YES];
 }
+
+-(IBAction)removeEmployee:(id)sender {
+    NSArray *selectedPeople = [employeeController selectedObjects];
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Delete?" defaultButton:@"Delete" alternateButton:@"Cancel" otherButton:nil informativeTextWithFormat:@"Do you really want to delete %lu people?", (unsigned long)[selectedPeople count]];
+    NSLog(@"Starting alert sheet");
+    [alert beginSheetModalForWindow:[tableView window] modalDelegate:self didEndSelector:@selector(alertEnded:code:context:) contextInfo:NULL];
+}
+
 
 /*
 - (instancetype)init {

@@ -15,6 +15,7 @@
     IBOutlet NSArrayController *employeeController;
 }
 -(IBAction)createEmployee:(id)sender;
+-(IBAction)removeEmployee:(id)sender;
 //-(void)handleColorChange:(NSNotification *)note;
 -(void)setEmployees:(NSMutableArray *)a;
 -(void)removeObjectFromEmployeesAtIndex:(int)index;
