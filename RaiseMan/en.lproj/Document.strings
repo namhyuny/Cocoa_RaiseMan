@@ -19,3 +19,7 @@
 
 /* Class = "NSWindow"; title = "Window"; ObjectID = "xOd-HO-29H"; */
 "xOd-HO-29H.title" = "Window";
+
+"DELETE" = "Delete";
+"SURE_DELETE" = "Do you really want to delete %lu people?";
+"CANCEL" = "Cancel";

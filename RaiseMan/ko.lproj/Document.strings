@@ -19,3 +19,7 @@
 
 /* Class = "NSWindow"; title = "Window"; ObjectID = "xOd-HO-29H"; */
 "xOd-HO-29H.title" = "Window";
+
+"DELETE" = "삭제";
+"SURE_DELETE" = "정말로 %lu개의 기록을 지우시겠습니까?";
+"CANCEL" = "취소";
